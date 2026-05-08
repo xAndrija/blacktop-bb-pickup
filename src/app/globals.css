@@ -18,6 +18,11 @@ body {
   }
 }
 
+/* Prevent map from scrolling the page on touch */
+.leaflet-container {
+  touch-action: none !important;
+}
+
 .skeleton {
   background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.10) 50%, rgba(255,255,255,0.05) 75%);
   background-size: 200% 100%;

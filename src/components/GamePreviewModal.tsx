@@ -141,24 +141,21 @@ export default function GamePreviewModal({ sessionId, currentUserId, unreadCount
   return (
     <div
       onClick={onClose}
-      style={{
-        position: 'fixed', inset: 0, zIndex: 9999,
-        background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(6px)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        padding: '16px',
-      }}
+      className="fixed inset-0 flex items-end sm:items-center justify-center sm:p-4"
+      style={{ zIndex: 9999, background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(6px)' }}
     >
       <div
         onClick={e => e.stopPropagation()}
+        className="w-full sm:max-w-[400px]"
         style={{
-          width: '100%', maxWidth: 400,
           background: 'rgba(14,14,22,0.98)',
           border: '1px solid rgba(255,255,255,0.10)',
-          borderRadius: 22,
+          borderRadius: '22px 22px 0 0',
           overflow: 'hidden',
           boxShadow: '0 24px 80px rgba(0,0,0,0.7)',
           display: 'flex', flexDirection: 'column',
-          height: tab === 'chat' ? 520 : 'auto',
+          maxHeight: '92svh',
+          height: tab === 'chat' ? 'min(520px, 88svh)' : 'auto',
         }}
       >
         {/* Header */}

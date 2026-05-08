@@ -66,7 +66,7 @@ export default function CourtsContent({ courts, countMap }: Props) {
         )
       ) : (
         <div className="glass rounded-2xl overflow-hidden">
-          <CourtMap courts={courts} height="420px" />
+          <CourtMap courts={courts} height="clamp(260px, 55vw, 420px)" />
         </div>
       )}
     </>

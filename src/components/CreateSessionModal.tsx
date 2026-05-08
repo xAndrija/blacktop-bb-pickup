@@ -23,7 +23,7 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
 
   const minTime = date === today ? nowTime : undefined
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (!date || !time) { setError('Izaberi datum i vreme'); return }
     setLoading(true)
@@ -54,14 +54,16 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center px-4"
+      className="fixed inset-0 flex items-end sm:items-center justify-center sm:px-4"
       style={{ zIndex: 9999, background: 'rgba(0,0,0,0.70)', backdropFilter: 'blur(6px)' }}
     >
       <div
+        className="w-full sm:max-w-[460px]"
         style={{
           background: 'rgba(12,12,20,0.98)', border: '1px solid rgba(255,255,255,0.10)',
-          borderRadius: 24, width: '100%', maxWidth: 460,
+          borderRadius: '24px 24px 0 0',
           boxShadow: '0 24px 64px rgba(0,0,0,0.7)',
+          maxHeight: '92svh', overflowY: 'auto',
         }}
       >
         {/* Header */}
