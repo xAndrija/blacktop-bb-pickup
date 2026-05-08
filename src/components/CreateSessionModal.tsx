@@ -1,13 +1,76 @@
 'use client'
 
-import { useState } from 'react'
-import { CalendarDays, Clock, Users, FileText, Loader2, X } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { CalendarDays, Clock, Users, FileText, Loader2, X, ChevronUp, ChevronDown } from 'lucide-react'
 
 interface Props {
   courtId: string
   courtName?: string
   onCreated: () => void
   onClose: () => void
+}
+
+function TimePicker({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const [h, setH] = useState(() => parseInt(value.split(':')[0]) || 0)
+  const [m, setM] = useState(() => {
+    const raw = parseInt(value.split(':')[1]) || 0
+    return Math.round(raw / 5) * 5 % 60
+  })
+
+  useEffect(() => {
+    onChange(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`)
+  }, [h, m])
+
+  const btn = (onClick: () => void, icon: React.ReactNode) => (
+    <button
+      type="button"
+      onClick={onClick}
+      style={{
+        width: 40, height: 34, display: 'flex', alignItems: 'center', justifyContent: 'center',
+        background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.10)',
+        borderRadius: 10, cursor: 'pointer', color: 'rgba(255,255,255,0.55)',
+        transition: 'background 0.15s',
+      }}
+      onMouseEnter={e => (e.currentTarget.style.background = 'rgba(249,115,22,0.18)')}
+      onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.06)')}
+    >
+      {icon}
+    </button>
+  )
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '10px 0 4px' }}>
+      {/* Hours */}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+        {btn(() => setH(v => (v + 1) % 24), <ChevronUp size={16} />)}
+        <div style={{
+          width: 60, height: 52, display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: 'rgba(249,115,22,0.10)', border: '1px solid rgba(249,115,22,0.25)',
+          borderRadius: 14, color: 'white', fontSize: 26, fontWeight: 800, letterSpacing: '-0.02em',
+        }}>
+          {String(h).padStart(2, '0')}
+        </div>
+        {btn(() => setH(v => (v - 1 + 24) % 24), <ChevronDown size={16} />)}
+        <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 2 }}>sat</p>
+      </div>
+
+      <span style={{ color: 'rgba(249,115,22,0.7)', fontSize: 28, fontWeight: 900, marginBottom: 24 }}>:</span>
+
+      {/* Minutes */}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+        {btn(() => setM(v => (v + 5) % 60), <ChevronUp size={16} />)}
+        <div style={{
+          width: 60, height: 52, display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: 'rgba(249,115,22,0.10)', border: '1px solid rgba(249,115,22,0.25)',
+          borderRadius: 14, color: 'white', fontSize: 26, fontWeight: 800, letterSpacing: '-0.02em',
+        }}>
+          {String(m).padStart(2, '0')}
+        </div>
+        {btn(() => setM(v => (v - 5 + 60) % 60), <ChevronDown size={16} />)}
+        <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 2 }}>min</p>
+      </div>
+    </div>
+  )
 }
 
 export default function CreateSessionModal({ courtId, courtName, onCreated, onClose }: Props) {
@@ -21,9 +84,7 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const minTime = date === today ? nowTime : undefined
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault()
     if (!date || !time) { setError('Izaberi datum i vreme'); return }
     setLoading(true)
@@ -50,19 +111,22 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
     onCreated()
   }
 
-  const spotsLeft = maxPlayers - 1 // creator auto-joins
+  const spotsLeft = maxPlayers - 1
 
-  const inputStyle: React.CSSProperties = {
-    width: '100%',
-    background: 'rgba(255,255,255,0.05)',
-    border: '1px solid rgba(255,255,255,0.10)',
-    borderRadius: 12,
-    padding: '11px 12px',
-    color: 'white',
-    fontSize: 16, // 16px prevents iOS auto-zoom
-    outline: 'none',
-    boxSizing: 'border-box',
-    colorScheme: 'dark',
+  const cardStyle: React.CSSProperties = {
+    background: 'rgba(255,255,255,0.04)',
+    border: '1px solid rgba(255,255,255,0.09)',
+    borderRadius: 14,
+    padding: '10px 14px',
+    flex: 1,
+    minWidth: 0,
+  }
+
+  const labelStyle: React.CSSProperties = {
+    display: 'flex', alignItems: 'center', gap: 4,
+    fontSize: 10, fontWeight: 700, letterSpacing: '0.10em',
+    textTransform: 'uppercase', color: 'rgba(255,255,255,0.30)',
+    marginBottom: 6, margin: 0,
   }
 
   return (
@@ -80,20 +144,22 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
           boxShadow: '0 24px 64px rgba(0,0,0,0.7)',
           maxHeight: '92svh',
           overflowY: 'auto',
+          overflowX: 'hidden',
           paddingBottom: 'env(safe-area-inset-bottom)',
+          boxSizing: 'border-box',
         }}
         onClick={e => e.stopPropagation()}
       >
         {/* Handle bar */}
-        <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 10, paddingBottom: 4 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 10, paddingBottom: 2 }}>
           <div style={{ width: 36, height: 4, borderRadius: 999, background: 'rgba(255,255,255,0.12)' }} />
         </div>
 
         {/* Header */}
-        <div style={{ padding: '12px 18px 14px', borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div>
+        <div style={{ padding: '12px 18px 14px', borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+          <div style={{ minWidth: 0 }}>
             <h2 style={{ color: 'white', fontWeight: 800, fontSize: 17, marginBottom: 1 }}>Nova igra</h2>
-            {courtName && <p style={{ color: 'rgba(255,255,255,0.30)', fontSize: 13, margin: 0 }}>{courtName}</p>}
+            {courtName && <p style={{ color: 'rgba(255,255,255,0.30)', fontSize: 13, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{courtName}</p>}
           </div>
           <button
             onClick={onClose}
@@ -103,53 +169,39 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ padding: '16px 18px 20px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+        <form onSubmit={handleSubmit} style={{ padding: '16px 18px 20px', display: 'flex', flexDirection: 'column', gap: 14, boxSizing: 'border-box' }}>
           {error && (
             <div style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.25)', color: 'rgba(248,113,113,0.9)', borderRadius: 10, padding: '9px 12px', fontSize: 13 }}>
               {error}
             </div>
           )}
 
-          {/* Date + Time */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-            <div>
-              <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10, fontWeight: 700, letterSpacing: '0.10em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.30)', marginBottom: 6 }}>
-                <CalendarDays size={10} /> Datum
-              </label>
-              <input
-                type="date" required value={date} min={today}
-                onChange={e => setDate(e.target.value)}
-                style={inputStyle}
-                onFocus={e => (e.target.style.borderColor = 'rgba(249,115,22,0.55)')}
-                onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.10)')}
-              />
-            </div>
-            <div>
-              <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10, fontWeight: 700, letterSpacing: '0.10em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.30)', marginBottom: 6 }}>
-                <Clock size={10} /> Vreme
-              </label>
-              <input
-                type="time" required value={time} min={minTime}
-                onChange={e => setTime(e.target.value)}
-                style={inputStyle}
-                onFocus={e => (e.target.style.borderColor = 'rgba(249,115,22,0.55)')}
-                onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.10)')}
-              />
-            </div>
+          {/* Date */}
+          <div style={cardStyle}>
+            <p style={labelStyle}><CalendarDays size={10} /> Datum</p>
+            <input
+              type="date" required value={date} min={today}
+              onChange={e => setDate(e.target.value)}
+              style={{ background: 'none', border: 'none', outline: 'none', color: 'white', fontSize: 16, width: '100%', colorScheme: 'dark', padding: 0, marginTop: 6, boxSizing: 'border-box' }}
+            />
+          </div>
+
+          {/* Time picker */}
+          <div style={{ ...cardStyle, padding: '10px 14px 6px' }}>
+            <p style={labelStyle}><Clock size={10} /> Vreme</p>
+            <TimePicker value={time} onChange={setTime} />
           </div>
 
           {/* Max players */}
-          <div>
+          <div style={cardStyle}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-              <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10, fontWeight: 700, letterSpacing: '0.10em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.30)' }}>
-                <Users size={10} /> Max igrača
-              </label>
+              <p style={labelStyle}><Users size={10} /> Max igrača</p>
               <span style={{ color: '#fb923c', fontSize: 16, fontWeight: 800 }}>{maxPlayers}</span>
             </div>
             <input
               type="range" min={2} max={20} value={maxPlayers}
               onChange={e => setMaxPlayers(Number(e.target.value))}
-              style={{ width: '100%', accentColor: '#f97316', cursor: 'pointer', height: 20 }}
+              style={{ width: '100%', accentColor: '#f97316', cursor: 'pointer', height: 20, boxSizing: 'border-box' }}
             />
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: 'rgba(255,255,255,0.18)', marginTop: 3 }}>
               <span>2</span><span>10</span><span>20</span>
@@ -161,7 +213,7 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
 
           {/* Description */}
           <div>
-            <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10, fontWeight: 700, letterSpacing: '0.10em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.30)', marginBottom: 6 }}>
+            <label style={{ ...labelStyle, marginBottom: 6 }}>
               <FileText size={10} /> Opis <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0, marginLeft: 4 }}>(opciono)</span>
             </label>
             <textarea
@@ -170,7 +222,12 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
               maxLength={280}
               rows={2}
               placeholder="Npr. 3v3, fali igrač, trening šuteva…"
-              style={{ ...inputStyle, resize: 'none', lineHeight: 1.5, fontFamily: 'inherit' }}
+              style={{
+                width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.10)',
+                borderRadius: 12, padding: '11px 12px', color: 'white', fontSize: 16,
+                outline: 'none', boxSizing: 'border-box', resize: 'none', lineHeight: 1.5,
+                colorScheme: 'dark', fontFamily: 'inherit',
+              }}
               onFocus={e => (e.target.style.borderColor = 'rgba(249,115,22,0.55)')}
               onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.10)')}
             />
@@ -185,7 +242,7 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
               width: '100%', color: 'white', fontWeight: 700, fontSize: 15,
               padding: '13px', borderRadius: 13, display: 'flex', alignItems: 'center',
               justifyContent: 'center', gap: 8, opacity: loading ? 0.6 : 1,
-              cursor: loading ? 'not-allowed' : 'pointer',
+              cursor: loading ? 'not-allowed' : 'pointer', boxSizing: 'border-box',
             }}
           >
             {loading ? <><Loader2 size={16} style={{ animation: 'spin-cw 0.8s linear infinite' }} /> Kreiranje…</> : 'Kreiraj igru'}
