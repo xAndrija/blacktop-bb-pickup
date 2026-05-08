@@ -79,8 +79,8 @@ export default function DashboardContent({ username, courts, sessions, gamesJoin
 
       {/* ══ HERO ══════════════════════════════════════════════════════════ */}
       <section
-        className="animate-fade-up relative mb-10 rounded-3xl overflow-hidden"
-        style={{ padding: '44px 40px', background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.07)' }}
+        className="animate-fade-up relative mb-10 rounded-3xl overflow-hidden p-5 sm:p-8 md:p-11"
+        style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.07)' }}
       >
         <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', top: -100, right: -60, width: 420, height: 420, borderRadius: '50%', background: 'radial-gradient(circle, rgba(249,115,22,0.13) 0%, transparent 68%)' }} />

@@ -62,6 +62,7 @@ export default function Header({ username, email, avatarUrl, backHref, backLabel
   const initial = (username || email || '?')[0].toUpperCase()
 
   return (
+    <>
     <header
       className="sticky top-0 z-40 border-b border-white/8"
       style={{
@@ -72,8 +73,8 @@ export default function Header({ username, email, avatarUrl, backHref, backLabel
       }}
     >
       <div
-        className="w-full px-6 md:px-10 grid items-center"
-        style={{ height: '82px', gridTemplateColumns: '1fr auto 1fr' }}
+        className="w-full px-4 md:px-10 grid items-center grid-cols-2 md:grid-cols-[1fr_auto_1fr]"
+        style={{ height: '82px' }}
       >
 
         {/* Left: logo */}
@@ -87,16 +88,16 @@ export default function Header({ username, email, avatarUrl, backHref, backLabel
               {backLabel && <span className="text-sm font-medium max-w-[140px] truncate">{backLabel}</span>}
             </Link>
           )}
-          <Link href="/dashboard" className="flex items-center gap-3 select-none">
-            <div className="w-14 h-14 shrink-0 flex items-center justify-center">
-              <Logo size={56} />
+          <Link href="/dashboard" className="flex items-center gap-2 select-none">
+            <div className="w-10 h-10 md:w-14 md:h-14 shrink-0 flex items-center justify-center">
+              <Logo size={40} />
             </div>
-            <span className="font-bold text-lg gradient-text whitespace-nowrap">BLKTOP</span>
+            <span className="font-bold text-base md:text-lg gradient-text whitespace-nowrap hidden sm:inline">BLKTOP</span>
           </Link>
         </div>
 
-        {/* Center: navigation */}
-        <nav className="flex items-center gap-1">
+        {/* Center: navigation (desktop only) */}
+        <nav className="hidden md:flex items-center gap-1">
           <NavItem
             href="/courts"
             icon={<LayoutGrid size={15} />}
@@ -189,5 +190,36 @@ export default function Header({ username, email, avatarUrl, backHref, backLabel
 
       </div>
     </header>
+
+    {/* Mobile bottom nav */}
+    <nav
+      className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around px-2 py-1"
+      style={{
+        background: 'rgba(8,8,15,0.97)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        borderTop: '1px solid rgba(255,255,255,0.08)',
+        paddingBottom: 'max(8px, env(safe-area-inset-bottom))',
+      }}
+    >
+      {[
+        { href: '/courts',   icon: <LayoutGrid size={22} />, label: 'Tereni',  active: pathname === '/courts' || pathname.startsWith('/courts/') },
+        { href: '/map',      icon: <Map size={22} />,        label: 'Mapa',    active: pathname === '/map' },
+        { href: '/games',    icon: <Zap size={22} />,        label: 'Igre',    active: pathname === '/games' },
+        { href: '/my-games', icon: <CalendarDays size={22} />, label: 'Moje',  active: pathname === '/my-games' },
+        { href: '/profile',  icon: <User size={22} />,       label: 'Profil',  active: pathname === '/profile' },
+      ].map(item => (
+        <Link
+          key={item.href}
+          href={item.href}
+          className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-colors"
+          style={{ color: item.active ? '#fb923c' : 'rgba(255,255,255,0.30)' }}
+        >
+          {item.icon}
+          <span style={{ fontSize: 10, fontWeight: 600, lineHeight: 1 }}>{item.label}</span>
+        </Link>
+      ))}
+    </nav>
+    </>
   )
 }
