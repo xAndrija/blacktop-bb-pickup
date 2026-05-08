@@ -203,11 +203,9 @@ export default function Header({ username, email, avatarUrl, backHref, backLabel
       }}
     >
       {[
-        { href: '/courts',   icon: <LayoutGrid size={22} />, label: 'Tereni',  active: pathname === '/courts' || pathname.startsWith('/courts/') },
-        { href: '/map',      icon: <Map size={22} />,        label: 'Mapa',    active: pathname === '/map' },
-        { href: '/games',    icon: <Zap size={22} />,        label: 'Igre',    active: pathname === '/games' },
-        { href: '/my-games', icon: <CalendarDays size={22} />, label: 'Moje',  active: pathname === '/my-games' },
-        { href: '/profile',  icon: <User size={22} />,       label: 'Profil',  active: pathname === '/profile' },
+        { href: '/courts', icon: <LayoutGrid size={22} />, label: 'Tereni', active: pathname === '/courts' || pathname.startsWith('/courts/') },
+        { href: '/map',    icon: <Map size={22} />,        label: 'Mapa',   active: pathname === '/map' },
+        { href: '/games',  icon: <Zap size={22} />,        label: 'Igre',   active: pathname === '/games' },
       ].map(item => (
         <Link
           key={item.href}

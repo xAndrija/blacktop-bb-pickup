@@ -4,7 +4,7 @@ import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
-import { Camera, Check, Loader2, Mail, CalendarDays, ArrowRight, Lock, ChevronRight } from 'lucide-react'
+import { Camera, Check, Loader2, Mail, CalendarDays, Lock, ChevronRight } from 'lucide-react'
 
 interface Props {
   userId: string
@@ -95,7 +95,7 @@ export default function ProfileContent({ userId, email, initialUsername, initial
       </div>
 
       {/* Two-column grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: '1.5rem', alignItems: 'start' }}>
+      <div className="grid grid-cols-1 md:grid-cols-[320px_1fr] gap-4 md:gap-6 items-start">
 
         {/* LEFT: Avatar + account info */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -169,7 +169,7 @@ export default function ProfileContent({ userId, email, initialUsername, initial
 
         {/* RIGHT: Username edit + thin section */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 24, padding: '32px 36px' }}>
+        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 24, padding: 'clamp(20px, 4vw, 36px)' }}>
 
           <p style={{ color: 'rgba(255,255,255,0.30)', fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 6 }}>
             Korisničko ime
@@ -184,38 +184,23 @@ export default function ProfileContent({ userId, email, initialUsername, initial
             </div>
           )}
 
-          {/* Old → New */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24 }}>
-            <div style={{ flex: 1 }}>
-              <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.10em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: 7 }}>Trenutno</p>
-              <div style={{
-                background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
-                borderRadius: 14, padding: '13px 16px', color: 'rgba(255,255,255,0.38)',
-                fontSize: 15, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-              }}>
-                {savedUsername || '—'}
-              </div>
-            </div>
-
-            <ArrowRight size={18} color="rgba(249,115,22,0.45)" style={{ flexShrink: 0, marginTop: 20 }} />
-
-            <div style={{ flex: 1 }}>
-              <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.10em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: 7 }}>Novo</p>
-              <input
-                value={username}
-                onChange={e => setUsername(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && handleSave()}
-                placeholder="Unesite novo ime"
-                style={{
-                  width: '100%', background: 'rgba(255,255,255,0.05)',
-                  border: `1px solid ${changed ? 'rgba(249,115,22,0.45)' : 'rgba(255,255,255,0.10)'}`,
-                  borderRadius: 14, padding: '13px 16px', color: 'white', fontSize: 15,
-                  outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s',
-                }}
-                onFocus={e => (e.target.style.borderColor = 'rgba(249,115,22,0.55)')}
-                onBlur={e => (e.target.style.borderColor = changed ? 'rgba(249,115,22,0.45)' : 'rgba(255,255,255,0.10)')}
-              />
-            </div>
+          {/* Username input */}
+          <div style={{ marginBottom: 24 }}>
+            <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.10em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: 7 }}>Novo korisničko ime</p>
+            <input
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && handleSave()}
+              placeholder={savedUsername || 'Unesite korisničko ime'}
+              style={{
+                width: '100%', background: 'rgba(255,255,255,0.05)',
+                border: `1px solid ${changed ? 'rgba(249,115,22,0.45)' : 'rgba(255,255,255,0.10)'}`,
+                borderRadius: 14, padding: '13px 16px', color: 'white', fontSize: 15,
+                outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s',
+              }}
+              onFocus={e => (e.target.style.borderColor = 'rgba(249,115,22,0.55)')}
+              onBlur={e => (e.target.style.borderColor = changed ? 'rgba(249,115,22,0.45)' : 'rgba(255,255,255,0.10)')}
+            />
           </div>
 
           <button
