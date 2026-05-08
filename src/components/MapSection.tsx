@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import L from 'leaflet'
-import Link from 'next/link'
 import { Court } from '@/types'
 
 function FlyToUser({ pos }: { pos: [number, number] }) {
@@ -39,6 +38,7 @@ interface Props {
 export default function MapSection({ courts, headerHeight }: Props) {
   const [userPos, setUserPos] = useState<[number, number] | null>(null)
   const [locAsked, setLocAsked] = useState(false)
+  const [bottomOffset, setBottomOffset] = useState(0)
 
   useEffect(() => {
     if (!navigator.geolocation) return
@@ -49,7 +49,11 @@ export default function MapSection({ courts, headerHeight }: Props) {
     )
   }, [])
 
-  const height = `calc(100vh - ${headerHeight}px)`
+  useEffect(() => {
+    setBottomOffset(window.innerWidth < 768 ? 64 : 0)
+  }, [])
+
+  const height = `calc(100svh - ${headerHeight + bottomOffset}px)`
 
   return (
     <div style={{ position: 'relative', height, width: '100%' }}>
