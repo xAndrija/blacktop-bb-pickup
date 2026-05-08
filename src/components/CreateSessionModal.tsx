@@ -26,7 +26,7 @@ function TimePicker({ value, onChange }: { value: string; onChange: (v: string) 
       type="button"
       onClick={onClick}
       style={{
-        width: 40, height: 34, display: 'flex', alignItems: 'center', justifyContent: 'center',
+        width: 40, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center',
         background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.10)',
         borderRadius: 10, cursor: 'pointer', color: 'rgba(255,255,255,0.55)',
         transition: 'background 0.15s',
@@ -39,35 +39,35 @@ function TimePicker({ value, onChange }: { value: string; onChange: (v: string) 
   )
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '10px 0 4px' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '6px 0 2px' }}>
       {/* Hours */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-        {btn(() => setH(v => (v + 1) % 24), <ChevronUp size={16} />)}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+        {btn(() => setH(v => (v + 1) % 24), <ChevronUp size={15} />)}
         <div style={{
-          width: 60, height: 52, display: 'flex', alignItems: 'center', justifyContent: 'center',
+          width: 52, height: 42, display: 'flex', alignItems: 'center', justifyContent: 'center',
           background: 'rgba(249,115,22,0.10)', border: '1px solid rgba(249,115,22,0.25)',
-          borderRadius: 14, color: 'white', fontSize: 26, fontWeight: 800, letterSpacing: '-0.02em',
+          borderRadius: 12, color: 'white', fontSize: 22, fontWeight: 800, letterSpacing: '-0.02em',
         }}>
           {String(h).padStart(2, '0')}
         </div>
-        {btn(() => setH(v => (v - 1 + 24) % 24), <ChevronDown size={16} />)}
-        <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 2 }}>sat</p>
+        {btn(() => setH(v => (v - 1 + 24) % 24), <ChevronDown size={15} />)}
+        <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 0 }}>sat</p>
       </div>
 
-      <span style={{ color: 'rgba(249,115,22,0.7)', fontSize: 28, fontWeight: 900, marginBottom: 24 }}>:</span>
+      <span style={{ color: 'rgba(249,115,22,0.7)', fontSize: 24, fontWeight: 900, marginBottom: 20 }}>:</span>
 
       {/* Minutes */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-        {btn(() => setM(v => (v + 5) % 60), <ChevronUp size={16} />)}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+        {btn(() => setM(v => (v + 5) % 60), <ChevronUp size={15} />)}
         <div style={{
-          width: 60, height: 52, display: 'flex', alignItems: 'center', justifyContent: 'center',
+          width: 52, height: 42, display: 'flex', alignItems: 'center', justifyContent: 'center',
           background: 'rgba(249,115,22,0.10)', border: '1px solid rgba(249,115,22,0.25)',
-          borderRadius: 14, color: 'white', fontSize: 26, fontWeight: 800, letterSpacing: '-0.02em',
+          borderRadius: 12, color: 'white', fontSize: 22, fontWeight: 800, letterSpacing: '-0.02em',
         }}>
           {String(m).padStart(2, '0')}
         </div>
-        {btn(() => setM(v => (v - 5 + 60) % 60), <ChevronDown size={16} />)}
-        <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 2 }}>min</p>
+        {btn(() => setM(v => (v - 5 + 60) % 60), <ChevronDown size={15} />)}
+        <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 0 }}>min</p>
       </div>
     </div>
   )
@@ -117,7 +117,7 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
     background: 'rgba(255,255,255,0.04)',
     border: '1px solid rgba(255,255,255,0.09)',
     borderRadius: 14,
-    padding: '10px 14px',
+    padding: '8px 12px',
     flex: 1,
     minWidth: 0,
   }
@@ -156,7 +156,7 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
         </div>
 
         {/* Header */}
-        <div style={{ padding: '12px 18px 14px', borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+        <div style={{ padding: '8px 16px 10px', borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
           <div style={{ minWidth: 0 }}>
             <h2 style={{ color: 'white', fontWeight: 800, fontSize: 17, marginBottom: 1 }}>Nova igra</h2>
             {courtName && <p style={{ color: 'rgba(255,255,255,0.30)', fontSize: 13, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{courtName}</p>}
@@ -169,7 +169,7 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ padding: '16px 18px 20px', display: 'flex', flexDirection: 'column', gap: 14, boxSizing: 'border-box' }}>
+        <form onSubmit={handleSubmit} style={{ padding: '10px 14px 14px', display: 'flex', flexDirection: 'column', gap: 10, boxSizing: 'border-box' }}>
           {error && (
             <div style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.25)', color: 'rgba(248,113,113,0.9)', borderRadius: 10, padding: '9px 12px', fontSize: 13 }}>
               {error}
@@ -182,19 +182,19 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
             <input
               type="date" required value={date} min={today}
               onChange={e => setDate(e.target.value)}
-              style={{ background: 'none', border: 'none', outline: 'none', color: 'white', fontSize: 16, width: '100%', colorScheme: 'dark', padding: 0, marginTop: 6, boxSizing: 'border-box' }}
+              style={{ background: 'none', border: 'none', outline: 'none', color: 'white', fontSize: 16, width: '100%', colorScheme: 'dark', padding: 0, marginTop: 4, boxSizing: 'border-box' }}
             />
           </div>
 
           {/* Time picker */}
-          <div style={{ ...cardStyle, padding: '10px 14px 6px' }}>
+          <div style={{ ...cardStyle, padding: '6px 12px 4px' }}>
             <p style={labelStyle}><Clock size={10} /> Vreme</p>
             <TimePicker value={time} onChange={setTime} />
           </div>
 
           {/* Max players */}
           <div style={cardStyle}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 5 }}>
               <p style={labelStyle}><Users size={10} /> Max igrača</p>
               <span style={{ color: '#fb923c', fontSize: 16, fontWeight: 800 }}>{maxPlayers}</span>
             </div>
@@ -213,7 +213,7 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
 
           {/* Description */}
           <div>
-            <label style={{ ...labelStyle, marginBottom: 6 }}>
+            <label style={{ ...labelStyle, marginBottom: 4 }}>
               <FileText size={10} /> Opis <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0, marginLeft: 4 }}>(opciono)</span>
             </label>
             <textarea
@@ -224,7 +224,7 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
               placeholder="Npr. 3v3, fali igrač, trening šuteva…"
               style={{
                 width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.10)',
-                borderRadius: 12, padding: '11px 12px', color: 'white', fontSize: 16,
+                borderRadius: 12, padding: '8px 12px', color: 'white', fontSize: 16,
                 outline: 'none', boxSizing: 'border-box', resize: 'none', lineHeight: 1.5,
                 colorScheme: 'dark', fontFamily: 'inherit',
               }}
@@ -240,7 +240,7 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
             className="btn-shimmer"
             style={{
               width: '100%', color: 'white', fontWeight: 700, fontSize: 15,
-              padding: '13px', borderRadius: 13, display: 'flex', alignItems: 'center',
+              padding: '11px', borderRadius: 13, display: 'flex', alignItems: 'center',
               justifyContent: 'center', gap: 8, opacity: loading ? 0.6 : 1,
               cursor: loading ? 'not-allowed' : 'pointer', boxSizing: 'border-box',
             }}

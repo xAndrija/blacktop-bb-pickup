@@ -95,18 +95,23 @@ export default function LandingPage() {
       </div>
 
       {/* ── Nav ─────────────────────────────────────────────────────────── */}
-      <nav style={{ position: 'relative', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px', height: 82, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <Logo size={56} />
-          <span className="gradient-text" style={{ fontWeight: 800, fontSize: 18 }}>BLKTOP</span>
+      <nav className="px-4 sm:px-10" style={{ position: 'relative', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 82, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <Logo size={36} />
+          <span className="gradient-text" style={{ fontWeight: 800, fontSize: 17 }}>BLKTOP</span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <Link href="/login" style={{ color: 'rgba(255,255,255,0.45)', fontWeight: 600, fontSize: 14, padding: '8px 14px', borderRadius: 10, transition: 'color 0.2s' }}
-            onMouseEnter={e => (e.currentTarget.style.color = 'white')}
-            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <Link
+            href="/login"
+            className="text-white/45 hover:text-white font-semibold text-xs sm:text-sm px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl transition-colors"
+          >
             Prijavi se
           </Link>
-          <Link href="/register" className="btn-shimmer" style={{ color: 'white', fontWeight: 700, fontSize: 14, padding: '9px 18px', borderRadius: 10, boxShadow: '0 4px 20px rgba(249,115,22,0.25)' }}>
+          <Link
+            href="/register"
+            className="btn-shimmer text-white font-bold text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl"
+            style={{ boxShadow: '0 4px 20px rgba(249,115,22,0.25)' }}
+          >
             Registruj se
           </Link>
         </div>

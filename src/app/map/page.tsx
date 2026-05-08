@@ -19,7 +19,7 @@ export default async function MapPage() {
   return (
     <div style={{ background: '#08080f', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Header username={profile?.username ?? ''} email={user.email ?? ''} avatarUrl={(profile as any)?.avatar_url} />
-      <div style={{ flex: 1 }}>
+      <div style={{ flex: 1, isolation: 'isolate' }}>
         <MapLoader courts={courts ?? []} headerHeight={82} />
       </div>
     </div>
