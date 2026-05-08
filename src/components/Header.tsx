@@ -92,7 +92,7 @@ export default function Header({ username, email, avatarUrl, backHref, backLabel
             <div className="w-10 h-10 md:w-14 md:h-14 shrink-0 flex items-center justify-center">
               <Logo size={40} />
             </div>
-            <span className="font-bold text-base md:text-lg gradient-text whitespace-nowrap hidden sm:inline">BLKTOP</span>
+            <span className="font-bold text-base md:text-lg gradient-text whitespace-nowrap">BLKTOP</span>
           </Link>
         </div>
 
