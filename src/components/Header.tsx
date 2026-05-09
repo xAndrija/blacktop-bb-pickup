@@ -131,7 +131,7 @@ export default function Header({ username, email, avatarUrl, backHref, backLabel
                   : 'bg-orange-500/15 border-orange-500/30 text-orange-300'
               }`}>
                 {avatarUrl
-                  ? <img src={avatarUrl} alt="avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ? <img src={avatarUrl} alt="avatar" draggable={false} onContextMenu={e => e.preventDefault()} style={{ width: '100%', height: '100%', objectFit: 'cover', WebkitTouchCallout: 'none', userSelect: 'none', WebkitUserDrag: 'none' } as React.CSSProperties} />
                   : initial}
               </div>
               <span className="text-white/55 text-base hidden sm:block max-w-[160px] truncate">
