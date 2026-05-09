@@ -87,7 +87,7 @@ export default function DashboardContent({ username, courts, sessions, gamesJoin
           <div style={{ position: 'absolute', bottom: -80, left: -80, width: 320, height: 320, borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 68%)' }} />
         </div>
 
-        <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32 }}>
+        <div className="flex flex-col-reverse md:flex-row items-center md:justify-between gap-4 md:gap-8" style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ flex: 1 }}>
             <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(249,115,22,0.7)', marginBottom: 14 }}>
               {dayName} · {dateStr}
@@ -112,7 +112,7 @@ export default function DashboardContent({ username, courts, sessions, gamesJoin
             </div>
           </div>
 
-          <div className="hidden md:flex items-center justify-center shrink-0">
+          <div className="hero-animation flex items-center justify-center shrink-0">
             <div style={{ position: 'relative', width: 260, height: 240 }}>
 
               {/* ── Layer 1: backboard + back-rim + net ── */}

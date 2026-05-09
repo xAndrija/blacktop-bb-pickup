@@ -16,6 +16,9 @@ body {
   main {
     padding-bottom: 80px !important;
   }
+  .hero-animation {
+    zoom: 0.68;
+  }
 }
 
 /* Prevent map from scrolling the page on touch */
