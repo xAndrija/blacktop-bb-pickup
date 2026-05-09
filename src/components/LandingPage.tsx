@@ -269,18 +269,18 @@ export default function LandingPage() {
       ══════════════════════════════════════════════════════════════════ */}
       <section style={{ position: 'relative', zIndex: 10, padding: '0 24px 80px' }}>
         <div style={{
-          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+          display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
           gap: '1px', maxWidth: 720, margin: '0 auto',
           background: 'rgba(255,255,255,0.06)', borderRadius: 20, overflow: 'hidden',
           border: '1px solid rgba(255,255,255,0.08)',
         }}>
           {stats.map((s, i) => (
             <div key={i} className="scroll-reveal" style={{
-              background: '#08080f', padding: '32px 24px', textAlign: 'center',
+              background: '#08080f', padding: 'clamp(20px, 5vw, 32px) clamp(10px, 3vw, 24px)', textAlign: 'center',
               transitionDelay: `${i * 0.1}s`,
             }}>
-              <div className="gradient-text" style={{ fontSize: 36, fontWeight: 900, letterSpacing: '-0.03em' }}>{s.value}</div>
-              <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: 13, marginTop: 4 }}>{s.label}</div>
+              <div className="gradient-text" style={{ fontSize: 'clamp(22px, 6vw, 36px)', fontWeight: 900, letterSpacing: '-0.03em' }}>{s.value}</div>
+              <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: 'clamp(10px, 2.5vw, 13px)', marginTop: 4 }}>{s.label}</div>
             </div>
           ))}
         </div>
@@ -297,7 +297,7 @@ export default function LandingPage() {
           Tri koraka do igre
         </h2>
 
-        <div style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '1.5rem' }}>
+        <div className="grid grid-cols-1 md:grid-cols-3" style={{ maxWidth: 900, margin: '0 auto', gap: '1rem' }}>
           {steps.map((s, i) => (
             <div key={s.num} className="scroll-reveal" style={{ transitionDelay: `${0.1 + i * 0.12}s`, display: 'flex' }}>
               <div style={{
