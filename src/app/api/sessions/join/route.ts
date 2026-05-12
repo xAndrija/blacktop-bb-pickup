@@ -48,7 +48,12 @@ export async function POST(request: NextRequest) {
       .map(p => p.user_id)
       .filter(id => id !== user.id)
 
-    if (otherPlayerIds.length > 0) {
+    console.log('[email] otherPlayerIds:', otherPlayerIds)
+    console.log('[email] session.courts:', session.courts)
+
+    if (otherPlayerIds.length === 0) {
+      console.log('[email] no other players, skipping')
+    } else {
       const admin = createAdminClient()
 
       const [profileResult, ...userResults] = await Promise.all([
@@ -64,9 +69,16 @@ export async function POST(request: NextRequest) {
         .map(r => r.data.user?.email)
         .filter((e): e is string => Boolean(e))
 
+      console.log('[email] joinerName:', joinerName)
+      console.log('[email] recipientEmails:', recipientEmails)
+
       const court = session.courts as { name: string; location_name: string } | null
 
-      if (recipientEmails.length > 0 && court) {
+      if (!court) {
+        console.log('[email] court is null, skipping')
+      } else if (recipientEmails.length === 0) {
+        console.log('[email] no recipient emails found, skipping')
+      } else {
         await sendJoinNotification({
           recipientEmails,
           joinerName,
@@ -76,6 +88,7 @@ export async function POST(request: NextRequest) {
           currentCount: session.session_players.length + 1,
           maxPlayers: session.max_players,
         })
+        console.log('[email] notification sent to:', recipientEmails)
       }
     }
   } catch (err) {
