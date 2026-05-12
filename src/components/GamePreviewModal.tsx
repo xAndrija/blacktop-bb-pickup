@@ -115,10 +115,17 @@ export default function GamePreviewModal({ sessionId, currentUserId, unreadCount
     }
 
     if (hasJoined) {
-      await supabase.from('session_players').delete()
-        .eq('session_id', session.id).eq('user_id', currentUserId)
+      await fetch('/api/sessions/leave', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: session.id }),
+      })
     } else {
-      await supabase.from('session_players').insert({ session_id: session.id, user_id: currentUserId })
+      await fetch('/api/sessions/join', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: session.id }),
+      })
     }
 
     const { data } = await supabase
