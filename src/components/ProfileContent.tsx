@@ -69,8 +69,7 @@ export default function ProfileContent({ userId, email, initialUsername, initial
     const supabase = createClient()
     const { error: err } = await supabase
       .from('profiles')
-      .update({ username: username.trim() })
-      .eq('id', userId)
+      .upsert({ id: userId, username: username.trim() })
 
     if (err) {
       setError('Greška pri čuvanju: ' + err.message)
