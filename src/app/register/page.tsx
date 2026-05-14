@@ -19,7 +19,7 @@ export default function RegisterPage() {
   const metCount = [hasMinLength, hasUppercase, hasNumber].filter(Boolean).length
   const strengthColor = metCount === 0 ? 'rgba(255,255,255,0.10)' : metCount === 1 ? '#ef4444' : metCount === 2 ? '#f97316' : '#22c55e'
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (metCount < 3) {
       setError('Lozinka mora imati min. 6 karaktera, početi velikim slovom i sadržati broj.')
@@ -30,7 +30,11 @@ export default function RegisterPage() {
 
     const supabase = createClient()
 
-    const { data, error: signUpError } = await supabase.auth.signUp({ email, password })
+    const { data, error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { username } },
+    })
 
     if (signUpError || !data.user) {
       setError(signUpError?.message ?? 'Greška pri registraciji')
@@ -38,20 +42,7 @@ export default function RegisterPage() {
       return
     }
 
-    const { error: profileError } = await supabase
-      .from('profiles')
-      .insert({ id: data.user.id, username })
-
-    if (profileError) {
-      if (profileError.code === '23505') {
-        setError('Korisničko ime je zauzeto, izaberi drugo')
-      } else {
-        setError(profileError.message)
-      }
-      setLoading(false)
-      return
-    }
-
+    // Profile is created automatically via database trigger (handle_new_user)
     window.location.href = '/dashboard'
   }
 
