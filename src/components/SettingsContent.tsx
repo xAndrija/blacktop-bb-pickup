@@ -43,7 +43,7 @@ export default function SettingsContent({ email, userId, initialNotify }: Props)
     setNotify(next)
     setNotifyLoading(true)
     const supabase = createClient()
-    const { error } = await supabase.from('profiles').upsert({ id: userId, notify_on_join: next })
+    const { error } = await supabase.from('profiles').update({ notify_on_join: next }).eq('id', userId)
     if (error) {
       console.error('[notify] upsert error:', error)
       setNotify(!next) // revert
