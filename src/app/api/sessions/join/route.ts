@@ -56,8 +56,9 @@ export async function POST(request: NextRequest) {
     } else {
       const admin = createAdminClient()
 
-      const [profileResult, ...userResults] = await Promise.all([
+      const [profileResult, notifyPrefs, ...userResults] = await Promise.all([
         supabase.from('profiles').select('username').eq('id', user.id).single(),
+        supabase.from('profiles').select('id, notify_on_join').in('id', otherPlayerIds),
         ...otherPlayerIds.map(id => admin.auth.admin.getUserById(id)),
       ])
 
@@ -65,7 +66,13 @@ export async function POST(request: NextRequest) {
         || user.email?.split('@')[0]
         || 'Igrač'
 
+      const notifyingIds = otherPlayerIds.filter(id => {
+        const pref = (notifyPrefs.data ?? []).find((p: { id: string; notify_on_join: boolean | null }) => p.id === id)
+        return pref?.notify_on_join !== false
+      })
+
       const recipientEmails = userResults
+        .filter((_, i) => notifyingIds.includes(otherPlayerIds[i]))
         .map(r => r.data.user?.email)
         .filter((e): e is string => Boolean(e))
 

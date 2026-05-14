@@ -1,4 +1,4 @@
-export const revalidate = 60
+export const revalidate = 0
 
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
@@ -12,7 +12,7 @@ export default async function SettingsPage() {
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('username, avatar_url')
+    .select('username, avatar_url, notify_on_join')
     .eq('id', user.id)
     .single()
 
@@ -23,7 +23,11 @@ export default async function SettingsPage() {
         email={user.email ?? ''}
         avatarUrl={(profile as any)?.avatar_url}
       />
-      <SettingsContent email={user.email ?? ''} />
+      <SettingsContent
+        email={user.email ?? ''}
+        userId={user.id}
+        initialNotify={(profile as any)?.notify_on_join !== false}
+      />
     </div>
   )
 }
