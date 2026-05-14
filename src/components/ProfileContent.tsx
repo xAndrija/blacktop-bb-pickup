@@ -69,10 +69,14 @@ export default function ProfileContent({ userId, email, initialUsername, initial
     const supabase = createClient()
     const { error: err } = await supabase
       .from('profiles')
-      .upsert({ id: userId, username: username.trim() })
+      .update({ username: username.trim() })
+      .eq('id', userId)
 
     if (err) {
-      setError('Greška pri čuvanju: ' + err.message)
+      const msg = err.code === '23505'
+        ? `Korisničko ime "${username.trim()}" je već zauzeto. Izaberi drugo.`
+        : 'Greška pri čuvanju: ' + err.message
+      setError(msg)
     } else {
       setSavedUsername(username.trim())
       setSaved(true)
