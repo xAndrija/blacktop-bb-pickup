@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 import { ArrowLeft, CalendarDays, LogOut, Map, LayoutGrid, Settings, User, Zap } from 'lucide-react'
 import Logo from './Logo'
@@ -125,13 +126,13 @@ export default function Header({ username, email, avatarUrl, backHref, backLabel
               onClick={() => setOpen(o => !o)}
               className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl transition-all ${open ? 'bg-white/8' : 'hover:bg-white/5'}`}
             >
-              <div className={`w-11 h-11 rounded-full flex items-center justify-center font-bold text-lg border shrink-0 overflow-hidden ${
+              <div className={`relative w-11 h-11 rounded-full flex items-center justify-center font-bold text-lg border shrink-0 overflow-hidden ${
                 open
                   ? 'bg-orange-500/30 border-orange-500/60 text-orange-200'
                   : 'bg-orange-500/15 border-orange-500/30 text-orange-300'
               }`}>
                 {avatarUrl
-                  ? <img src={avatarUrl} alt="avatar" draggable={false} onContextMenu={e => e.preventDefault()} style={{ width: '100%', height: '100%', objectFit: 'cover', WebkitTouchCallout: 'none', userSelect: 'none', WebkitUserDrag: 'none' } as React.CSSProperties} />
+                  ? <Image src={avatarUrl} alt="avatar" fill draggable={false} onContextMenu={e => e.preventDefault()} style={{ objectFit: 'cover', WebkitTouchCallout: 'none', userSelect: 'none', WebkitUserDrag: 'none' } as React.CSSProperties} />
                   : initial}
               </div>
               <span className="text-white/55 text-base hidden sm:block max-w-[160px] truncate">

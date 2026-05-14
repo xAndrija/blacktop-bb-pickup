@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Send } from 'lucide-react'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 
 interface Message {
@@ -84,10 +85,10 @@ export default function SessionChat({ sessionId, currentUserId }: Props) {
                 border: `1.5px solid ${isMe ? 'rgba(249,115,22,0.35)' : 'rgba(255,255,255,0.10)'}`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 11, fontWeight: 700, color: isMe ? '#fb923c' : 'rgba(255,255,255,0.45)',
-                overflow: 'hidden',
+                overflow: 'hidden', position: 'relative',
               }}>
                 {m.profiles?.avatar_url
-                  ? <img src={m.profiles.avatar_url} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ? <Image src={m.profiles.avatar_url} alt={name} fill style={{ objectFit: 'cover' }} />
                   : (name[0] ?? '?').toUpperCase()
                 }
               </div>

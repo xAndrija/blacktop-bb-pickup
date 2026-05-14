@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { X, MapPin, Calendar, Users, Clock, Loader2, MessageCircle } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { ProfileMap } from '@/types'
@@ -41,10 +42,10 @@ function Avatar({ name, url, highlight }: { name: string; url?: string | null; h
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontSize: 14, fontWeight: 700, color: '#fb923c',
         boxShadow: highlight ? '0 0 0 2px rgba(249,115,22,0.25)' : 'none',
-        cursor: 'default',
+        cursor: 'default', position: 'relative',
       }}>
         {url
-          ? <img src={url} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          ? <Image src={url} alt={name} fill style={{ objectFit: 'cover' }} />
           : (name?.[0] ?? '?').toUpperCase()
         }
       </div>

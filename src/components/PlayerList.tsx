@@ -1,4 +1,5 @@
 import { Users } from 'lucide-react'
+import Image from 'next/image'
 import { SessionPlayer, ProfileMap } from '@/types'
 
 interface Props {
@@ -43,12 +44,12 @@ export default function PlayerList({ players, maxPlayers, currentUserId, profile
                 background: isMe ? 'rgba(249,115,22,0.25)' : 'rgba(255,255,255,0.10)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 11, fontWeight: 700, color: isMe ? '#fb923c' : 'rgba(255,255,255,0.65)',
-                flexShrink: 0,
+                flexShrink: 0, position: 'relative',
                 boxShadow: isMe ? '0 0 0 2px rgba(249,115,22,0.20)' : 'none',
               }}
             >
               {profile?.avatar_url
-                ? <img src={profile.avatar_url} alt={profile.username ?? ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ? <Image src={profile.avatar_url} alt={profile.username ?? ''} fill style={{ objectFit: 'cover' }} />
                 : initial}
             </div>
           )

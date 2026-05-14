@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 import { Camera, Check, Loader2, Mail, CalendarDays, Lock, ChevronRight } from 'lucide-react'
@@ -115,10 +116,10 @@ export default function ProfileContent({ userId, email, initialUsername, initial
                 width: 136, height: 136, borderRadius: '50%', overflow: 'hidden',
                 background: 'rgba(249,115,22,0.15)', border: '2px solid rgba(249,115,22,0.30)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: '#fb923c', fontWeight: 900, fontSize: 46,
+                color: '#fb923c', fontWeight: 900, fontSize: 46, position: 'relative',
               }}>
                 {avatarUrl
-                  ? <img src={avatarUrl} alt="avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ? <Image src={avatarUrl} alt="avatar" fill style={{ objectFit: 'cover' }} />
                   : initial}
               </div>
               <button
