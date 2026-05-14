@@ -44,7 +44,7 @@ export default function ResetPasswordPage() {
   const match = password === confirm && confirm.length > 0
   const canSubmit = metCount === 3 && match
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault()
     if (!canSubmit) return
     setLoading(true)
@@ -52,7 +52,10 @@ export default function ResetPasswordPage() {
     const supabase = createClient()
     const { error: err } = await supabase.auth.updateUser({ password })
     if (err) {
-      setError('Greška: ' + err.message)
+      const msg = err.message.toLowerCase().includes('different')
+        ? 'Nova lozinka mora biti različita od stare.'
+        : 'Greška: ' + err.message
+      setError(msg)
     } else {
       setDone(true)
       setTimeout(() => router.push('/dashboard'), 2500)
