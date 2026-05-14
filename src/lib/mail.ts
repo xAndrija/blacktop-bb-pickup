@@ -43,7 +43,7 @@ export async function sendJoinNotification(params: JoinNotificationParams) {
             <p style="margin:0 0 4px;font-size:14px;color:#f0f0f5">${dateStr} u <strong>${timeStr}</strong></p>
             <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.35)">${params.currentCount}/${params.maxPlayers} igrača</p>
           </div>
-          <a href="https://blacktop-bb-pickup.vercel.app/games"
+          <a href="https://blktop.it.com/games"
              style="display:inline-block;background:linear-gradient(135deg,#f97316,#f59e0b);color:white;font-weight:700;padding:12px 24px;border-radius:10px;text-decoration:none;font-size:14px">
             Vidi igru →
           </a>
