@@ -3,8 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
-import { Lock, Eye, EyeOff, Check, Loader2, ShieldCheck, Bell } from 'lucide-react'
-import PushToggle from './PushToggle'
+import { Lock, Eye, EyeOff, Check, Loader2, ShieldCheck } from 'lucide-react'
 
 interface Props {
   email: string
@@ -69,29 +68,6 @@ export default function SettingsContent({ email }: Props) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
 
-      {/* Notifications section */}
-      <div
-        className="rounded-3xl p-7"
-        style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-          <div style={{ width: 40, height: 40, borderRadius: 12, background: 'rgba(249,115,22,0.10)', border: '1px solid rgba(249,115,22,0.22)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Bell size={17} color="#fb923c" />
-          </div>
-          <div>
-            <p style={{ color: 'white', fontWeight: 700, fontSize: 15 }}>Obaveštenja</p>
-            <p style={{ color: 'rgba(255,255,255,0.28)', fontSize: 12 }}>Push notifikacije u browseru</p>
-          </div>
-        </div>
-
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 4 }}>
-          <PushToggle />
-        </div>
-
-        <p style={{ color: 'rgba(255,255,255,0.20)', fontSize: 12, marginTop: 14, lineHeight: 1.5 }}>
-          Dobićeš notifikaciju kad se neko pridruži tvojoj igri ili kad se igra popuni.
-        </p>
-      </div>
 
       {/* Password section */}
       <div
