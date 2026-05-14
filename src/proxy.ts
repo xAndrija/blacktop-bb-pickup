@@ -29,7 +29,7 @@ export async function proxy(request: NextRequest) {
 
   const { pathname } = request.nextUrl
   const isPublic = pathname === '/' || pathname === '/login' || pathname === '/register'
-    || pathname === '/privacy' || pathname === '/terms'
+    || pathname === '/privacy' || pathname === '/terms' || pathname === '/reset-password'
 
   if (!user && !isPublic) {
     return NextResponse.redirect(new URL('/login', request.url))
