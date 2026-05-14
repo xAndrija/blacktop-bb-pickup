@@ -1,12 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import Logo from '@/components/Logo'
 import { Lock, Eye, EyeOff, Check, ShieldCheck, Loader2 } from 'lucide-react'
 
 export default function ResetPasswordPage() {
+  const [ready, setReady] = useState(false)
+  const [sessionError, setSessionError] = useState('')
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
   const [showPass, setShowPass] = useState(false)
@@ -15,6 +17,24 @@ export default function ResetPasswordPage() {
   const [done, setDone] = useState(false)
   const [error, setError] = useState('')
   const router = useRouter()
+
+  useEffect(() => {
+    const supabase = createClient()
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        setReady(true)
+      }
+    })
+    // Timeout — if no PASSWORD_RECOVERY event after 6s, link is invalid/expired
+    const timeout = setTimeout(() => {
+      setSessionError('Link je istekao ili nije validan. Zatraži novi u Podešavanjima.')
+    }, 6000)
+
+    return () => {
+      subscription.unsubscribe()
+      clearTimeout(timeout)
+    }
+  }, [])
 
   const hasMinLength = password.length >= 6
   const hasUppercase = /[A-Z]/.test(password[0] ?? '')
@@ -58,6 +78,18 @@ export default function ResetPasswordPage() {
               <ShieldCheck size={40} color="#22c55e" style={{ margin: '0 auto 16px' }} />
               <p style={{ color: 'white', fontWeight: 700, fontSize: 16, marginBottom: 6 }}>Lozinka je promenjena!</p>
               <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: 14 }}>Preusmeravamo te na dashboard…</p>
+            </div>
+          ) : sessionError && !ready ? (
+            <div style={{ textAlign: 'center', padding: '16px 0' }}>
+              <p style={{ color: 'rgba(248,113,113,0.9)', fontSize: 14, marginBottom: 16 }}>{sessionError}</p>
+              <button onClick={() => router.push('/settings')} style={{ color: '#fb923c', background: 'none', border: 'none', cursor: 'pointer', fontSize: 14, fontWeight: 600 }}>
+                Idi na Podešavanja →
+              </button>
+            </div>
+          ) : !ready ? (
+            <div style={{ textAlign: 'center', padding: '24px 0' }}>
+              <Loader2 size={28} color="#fb923c" style={{ animation: 'spin-cw 0.8s linear infinite', margin: '0 auto 12px' }} />
+              <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: 14 }}>Proveravamo link…</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
