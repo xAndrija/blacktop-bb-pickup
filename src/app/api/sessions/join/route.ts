@@ -58,13 +58,15 @@ export async function POST(request: NextRequest) {
 
       const [profileResult, notifyPrefs, ...userResults] = await Promise.all([
         supabase.from('profiles').select('username').eq('id', user.id).single(),
-        supabase.from('profiles').select('id, notify_on_join').in('id', otherPlayerIds),
+        admin.from('profiles').select('id, notify_on_join').in('id', otherPlayerIds),
         ...otherPlayerIds.map(id => admin.auth.admin.getUserById(id)),
       ])
 
       const joinerName = (profileResult.data as { username?: string } | null)?.username
         || user.email?.split('@')[0]
         || 'Igrač'
+
+      console.log('[email] notifyPrefs:', notifyPrefs.data, notifyPrefs.error)
 
       const notifyingIds = otherPlayerIds.filter(id => {
         const pref = (notifyPrefs.data ?? []).find((p: { id: string; notify_on_join: boolean | null }) => p.id === id)
@@ -77,6 +79,7 @@ export async function POST(request: NextRequest) {
         .filter((e): e is string => Boolean(e))
 
       console.log('[email] joinerName:', joinerName)
+      console.log('[email] notifyingIds:', notifyingIds)
       console.log('[email] recipientEmails:', recipientEmails)
 
       const court = session.courts as { name: string; location_name: string } | null
