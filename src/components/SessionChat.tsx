@@ -68,7 +68,7 @@ export default function SessionChat({ sessionId, currentUserId }: Props) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
       {/* Lista poruka */}
-      <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '12px 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', overscrollBehavior: 'contain', padding: '12px 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
         {messages.length === 0 && (
           <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.20)', fontSize: 13, marginTop: 32 }}>
             Nema poruka. Budi prvi!
