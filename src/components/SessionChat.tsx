@@ -127,7 +127,7 @@ export default function SessionChat({ sessionId, currentUserId }: Props) {
           maxLength={500}
           style={{
             flex: 1, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.10)',
-            borderRadius: 12, padding: '9px 14px', color: 'white', fontSize: 13, outline: 'none',
+            borderRadius: 12, padding: '9px 14px', color: 'white', fontSize: 16, outline: 'none',
           }}
         />
         <button

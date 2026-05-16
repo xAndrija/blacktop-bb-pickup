@@ -178,8 +178,8 @@ export default function GamePreviewModal({ sessionId, currentUserId, unreadCount
           overflow: 'hidden',
           boxShadow: '0 24px 80px rgba(0,0,0,0.7)',
           display: 'flex', flexDirection: 'column',
-          maxHeight: '92dvh',
-          height: tab === 'chat' ? 'min(520px, 88dvh)' : 'auto',
+          maxHeight: '92svh',
+          height: tab === 'chat' ? 'min(520px, 88svh)' : 'auto',
         }}
       >
         {/* Header */}

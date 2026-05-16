@@ -158,7 +158,7 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
           border: '1px solid rgba(255,255,255,0.10)',
           borderRadius: 20,
           boxShadow: '0 24px 64px rgba(0,0,0,0.7)',
-          maxHeight: '92dvh',
+          maxHeight: '92svh',
           overflowY: 'auto',
           overscrollBehavior: 'contain',
           overflowX: 'hidden',
