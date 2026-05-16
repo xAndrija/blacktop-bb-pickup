@@ -83,10 +83,21 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
   const [description, setDescription] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [bottomOffset, setBottomOffset] = useState(0)
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = '' }
+    const vv = window.visualViewport
+    const update = () => {
+      if (vv) setBottomOffset(Math.max(0, window.innerHeight - vv.height - vv.offsetTop))
+    }
+    vv?.addEventListener('resize', update)
+    vv?.addEventListener('scroll', update)
+    return () => {
+      document.body.style.overflow = ''
+      vv?.removeEventListener('resize', update)
+      vv?.removeEventListener('scroll', update)
+    }
   }, [])
 
   async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
@@ -137,7 +148,7 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
   return (
     <div
       className="fixed inset-0 flex items-end sm:items-center justify-center p-3 sm:p-4"
-      style={{ zIndex: 9999, background: 'rgba(0,0,0,0.70)', backdropFilter: 'blur(6px)' }}
+      style={{ zIndex: 9999, background: 'rgba(0,0,0,0.70)', backdropFilter: 'blur(6px)', paddingBottom: bottomOffset + 12 }}
       onClick={onClose}
     >
       <div
