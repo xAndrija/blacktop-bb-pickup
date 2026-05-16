@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Send } from 'lucide-react'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
+import Logo from '@/components/Logo'
 
 interface Message {
   id: string
@@ -89,7 +90,7 @@ export default function SessionChat({ sessionId, currentUserId }: Props) {
               }}>
                 {m.profiles?.avatar_url
                   ? <Image src={m.profiles.avatar_url} alt={name} fill style={{ objectFit: 'cover' }} />
-                  : (name[0] ?? '?').toUpperCase()
+                  : <Logo size={16} />
                 }
               </div>
               <div style={{ maxWidth: '72%' }}>

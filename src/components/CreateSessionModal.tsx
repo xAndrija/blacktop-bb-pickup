@@ -26,9 +26,9 @@ function TimePicker({ value, onChange }: { value: string; onChange: (v: string) 
       type="button"
       onClick={onClick}
       style={{
-        width: 40, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center',
+        width: 36, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center',
         background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.10)',
-        borderRadius: 10, cursor: 'pointer', color: 'rgba(255,255,255,0.55)',
+        borderRadius: 9, cursor: 'pointer', color: 'rgba(255,255,255,0.55)',
         transition: 'background 0.15s',
       }}
       onMouseEnter={e => (e.currentTarget.style.background = 'rgba(249,115,22,0.18)')}
@@ -39,35 +39,35 @@ function TimePicker({ value, onChange }: { value: string; onChange: (v: string) 
   )
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '6px 0 2px' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '4px 0 2px' }}>
       {/* Hours */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-        {btn(() => setH(v => (v + 1) % 24), <ChevronUp size={15} />)}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+        {btn(() => setH(v => (v + 1) % 24), <ChevronUp size={13} />)}
         <div style={{
-          width: 52, height: 42, display: 'flex', alignItems: 'center', justifyContent: 'center',
+          width: 46, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center',
           background: 'rgba(249,115,22,0.10)', border: '1px solid rgba(249,115,22,0.25)',
-          borderRadius: 12, color: 'white', fontSize: 22, fontWeight: 800, letterSpacing: '-0.02em',
+          borderRadius: 11, color: 'white', fontSize: 19, fontWeight: 800, letterSpacing: '-0.02em',
         }}>
           {String(h).padStart(2, '0')}
         </div>
-        {btn(() => setH(v => (v - 1 + 24) % 24), <ChevronDown size={15} />)}
-        <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 0 }}>sat</p>
+        {btn(() => setH(v => (v - 1 + 24) % 24), <ChevronDown size={13} />)}
+        <p style={{ fontSize: 9, color: 'rgba(255,255,255,0.25)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 0 }}>sat</p>
       </div>
 
-      <span style={{ color: 'rgba(249,115,22,0.7)', fontSize: 24, fontWeight: 900, marginBottom: 20 }}>:</span>
+      <span style={{ color: 'rgba(249,115,22,0.7)', fontSize: 20, fontWeight: 900, marginBottom: 18 }}>:</span>
 
       {/* Minutes */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-        {btn(() => setM(v => (v + 5) % 60), <ChevronUp size={15} />)}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+        {btn(() => setM(v => (v + 5) % 60), <ChevronUp size={13} />)}
         <div style={{
-          width: 52, height: 42, display: 'flex', alignItems: 'center', justifyContent: 'center',
+          width: 46, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center',
           background: 'rgba(249,115,22,0.10)', border: '1px solid rgba(249,115,22,0.25)',
-          borderRadius: 12, color: 'white', fontSize: 22, fontWeight: 800, letterSpacing: '-0.02em',
+          borderRadius: 11, color: 'white', fontSize: 19, fontWeight: 800, letterSpacing: '-0.02em',
         }}>
           {String(m).padStart(2, '0')}
         </div>
-        {btn(() => setM(v => (v - 5 + 60) % 60), <ChevronDown size={15} />)}
-        <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 0 }}>min</p>
+        {btn(() => setM(v => (v - 5 + 60) % 60), <ChevronDown size={13} />)}
+        <p style={{ fontSize: 9, color: 'rgba(255,255,255,0.25)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 0 }}>min</p>
       </div>
     </div>
   )
@@ -116,8 +116,8 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
   const cardStyle: React.CSSProperties = {
     background: 'rgba(255,255,255,0.04)',
     border: '1px solid rgba(255,255,255,0.09)',
-    borderRadius: 14,
-    padding: '8px 12px',
+    borderRadius: 13,
+    padding: '6px 11px',
     flex: 1,
     minWidth: 0,
   }
@@ -169,7 +169,7 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ padding: '10px 14px 14px', display: 'flex', flexDirection: 'column', gap: 10, boxSizing: 'border-box' }}>
+        <form onSubmit={handleSubmit} style={{ padding: '8px 12px 12px', display: 'flex', flexDirection: 'column', gap: 8, boxSizing: 'border-box' }}>
           {error && (
             <div style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.25)', color: 'rgba(248,113,113,0.9)', borderRadius: 10, padding: '9px 12px', fontSize: 13 }}>
               {error}
@@ -187,7 +187,7 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
           </div>
 
           {/* Time picker */}
-          <div style={{ ...cardStyle, padding: '6px 12px 4px' }}>
+          <div style={{ ...cardStyle, padding: '4px 11px 2px' }}>
             <p style={labelStyle}><Clock size={10} /> Vreme</p>
             <TimePicker value={time} onChange={setTime} />
           </div>
