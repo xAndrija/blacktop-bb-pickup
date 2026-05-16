@@ -14,7 +14,7 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault()
     setLoading(true)
     setError('')
@@ -23,7 +23,18 @@ export default function LoginPage() {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
 
     if (error) {
-      setError(error.message)
+      const msg = error.message.toLowerCase()
+      const translated =
+        msg.includes('invalid login') || msg.includes('invalid credentials')
+          ? 'Pogrešan email ili lozinka.'
+          : msg.includes('email not confirmed')
+          ? 'Email adresa nije potvrđena. Proveri inbox.'
+          : msg.includes('too many')
+          ? 'Previše pokušaja. Sačekaj malo i pokušaj ponovo.'
+          : msg.includes('network')
+          ? 'Problem sa konekcijom. Pokušaj ponovo.'
+          : error.message
+      setError(translated)
       setLoading(false)
     } else {
       router.push('/dashboard')

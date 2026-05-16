@@ -19,7 +19,7 @@ export default function RegisterPage() {
   const metCount = [hasMinLength, hasUppercase, hasNumber].filter(Boolean).length
   const strengthColor = metCount === 0 ? 'rgba(255,255,255,0.10)' : metCount === 1 ? '#ef4444' : metCount === 2 ? '#f97316' : '#22c55e'
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault()
     if (metCount < 3) {
       setError('Lozinka mora imati min. 6 karaktera, početi velikim slovom i sadržati broj.')
@@ -37,7 +37,18 @@ export default function RegisterPage() {
     })
 
     if (signUpError || !data.user) {
-      setError(signUpError?.message ?? 'Greška pri registraciji')
+      const msg = signUpError?.message.toLowerCase() ?? ''
+      const translated =
+        msg.includes('already registered') || msg.includes('already exists')
+          ? 'Nalog sa ovim emailom već postoji.'
+          : msg.includes('invalid email') || msg.includes('unable to validate')
+          ? 'Neispravna email adresa.'
+          : msg.includes('too many')
+          ? 'Previše pokušaja. Sačekaj malo i pokušaj ponovo.'
+          : msg.includes('network')
+          ? 'Problem sa konekcijom. Pokušaj ponovo.'
+          : signUpError?.message ?? 'Greška pri registraciji'
+      setError(translated)
       setLoading(false)
       return
     }
