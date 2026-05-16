@@ -10,9 +10,9 @@ export async function POST(request: NextRequest) {
   }
 
   const { session_id } = await request.json()
-  if (!session_id) {
-    return NextResponse.json({ error: 'Missing session_id' }, { status: 400 })
-  }
+  const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+  if (!session_id || !UUID.test(session_id))
+    return NextResponse.json({ error: 'Invalid session_id' }, { status: 400 })
 
   const { error } = await supabase
     .from('session_players')
