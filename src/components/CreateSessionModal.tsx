@@ -84,6 +84,11 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [])
+
   async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault()
     if (!date || !time) { setError('Izaberi datum i vreme'); return }
@@ -131,7 +136,7 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
 
   return (
     <div
-      className="fixed inset-0 flex items-end sm:items-center justify-center sm:px-4"
+      className="fixed inset-0 flex items-end sm:items-center justify-center p-3 sm:p-4"
       style={{ zIndex: 9999, background: 'rgba(0,0,0,0.70)', backdropFilter: 'blur(6px)' }}
       onClick={onClose}
     >
@@ -140,21 +145,16 @@ export default function CreateSessionModal({ courtId, courtName, onCreated, onCl
         style={{
           background: 'rgba(12,12,20,0.98)',
           border: '1px solid rgba(255,255,255,0.10)',
-          borderRadius: '20px 20px 0 0',
+          borderRadius: 20,
           boxShadow: '0 24px 64px rgba(0,0,0,0.7)',
-          maxHeight: '92svh',
+          maxHeight: '92dvh',
           overflowY: 'auto',
+          overscrollBehavior: 'contain',
           overflowX: 'hidden',
-          paddingBottom: 'env(safe-area-inset-bottom)',
           boxSizing: 'border-box',
         }}
         onClick={e => e.stopPropagation()}
       >
-        {/* Handle bar */}
-        <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 10, paddingBottom: 2 }}>
-          <div style={{ width: 36, height: 4, borderRadius: 999, background: 'rgba(255,255,255,0.12)' }} />
-        </div>
-
         {/* Header */}
         <div style={{ padding: '8px 16px 10px', borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
           <div style={{ minWidth: 0 }}>
